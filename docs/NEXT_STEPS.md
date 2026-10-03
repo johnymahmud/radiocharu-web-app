@@ -1,68 +1,53 @@
-# Radio Charu: Next Actionable Steps
+# Radio Charu: Next Actionable Steps & Roadmap
 
-## Phase 7 Status: INTEGRATED & READY FOR TOKEN / TESTING ✅
-- Multi-container architecture (`icecast` and `cloudflared`) configured with dynamic `TUNNEL_TOKEN` injection on `radio_net` bridge.
-- Central configurations (`web/js/config.js`, `admin/js/admin-config.js`, `mobile_app/lib/core/constants/api_endpoints.dart`) updated with dynamic host detection and production edge URL support.
-- Ephemeral Quick Tunnel test utilities (`tunnel/quick-tunnel.bat` and `tunnel/quick-tunnel.sh`) configured for instant `trycloudflare.com` testing.
-- Static analysis & tests: `flutter analyze` 0 issues, `flutter test` 100% passing.
-
----
-
-## Testing & Public Launch Options
-
-### Option A: Quick Ephemeral Test (Free, Zero Domain Required)
-Test live audio streaming from your local machine over cellular data or remote devices:
-1. Ensure the Icecast container is running:
-   ```powershell
-   cd server
-   docker compose up -d icecast
-   ```
-2. Start the ephemeral quick tunnel:
-   ```powershell
-   # Windows:
-   .\tunnel\quick-tunnel.bat
-
-   # Linux / macOS:
-   chmod +x ./tunnel/quick-tunnel.sh && ./tunnel/quick-tunnel.sh
-   ```
-3. Copy the output URL (e.g., `https://random-words.trycloudflare.com`).
-4. Test live stream playback on any phone or browser:
-   `https://random-words.trycloudflare.com/live`
-   `https://random-words.trycloudflare.com/status-json.xsl`
+## Phase 8 Status: UNIFIED 3-SERVICE DOCKER ECOSYSTEM OPERATIONAL ✅
+- **`radiocharu_icecast`**: Core streaming engine on port `8000`.
+- **`radiocharu_web_admin`**: Lightweight Nginx container serving listener player (`:3000`), RJ control panel (`:3000/admin/`), and reverse-proxying `/status-json.xsl` & `/live`.
+- **`radiocharu_tunnel`**: Zero-trust edge container (`cloudflare/cloudflared:latest`) on custom bridge network `radio_net`.
+- **Verification**: All endpoints verified 200 OK locally, mobile cellular streaming tested, and `flutter test` 100% passing.
 
 ---
 
-### Option B: Production Cloudflare Zero Trust Named Tunnel (Custom Domain)
-For permanent 24/7 public broadcasting with custom domain (e.g. `stream.yourdomain.com`):
-1. Navigate to **Cloudflare Dashboard** -> **Zero Trust** -> **Networks** -> **Tunnels**.
-2. Click **Create a Tunnel** (select **Cloudflared**), name it `radiocharu-broadcast-tunnel`.
-3. Copy the Tunnel Token from the setup command (e.g. `eyJh...`).
-4. Set the token in `server/.env`:
-   ```env
-   CLOUDFLARE_TUNNEL_TOKEN=eyJhIjoi...
-   ```
-5. In Cloudflare Tunnel Public Hostname configuration, add:
-   - **Subdomain**: `stream`
-   - **Domain**: `yourdomain.com`
-   - **Type**: `HTTP`
-   - **URL**: `icecast:8000`
-6. Launch both containers:
-   ```powershell
-   cd server
-   docker compose up -d
-   ```
-7. Verify public stream and status endpoints:
-   - `https://stream.yourdomain.com/live`
-   - `https://stream.yourdomain.com/status-json.xsl`
+## Day-2 / Next Session Action Roadmap
+
+### 1. Dedicated 24/7 Server Deployment
+- **Git Clone & Setup**:
+  ```bash
+  git clone https://github.com/your-org/radiocharu-web-app.git
+  cd radiocharu-web-app
+  cp server/.env.example server/.env
+  ```
+- **Auto-Restart & Background Boot**:
+  - All services configured with `restart: unless-stopped` in `docker-compose.yml`.
+  - Configure Docker Desktop to launch on Windows system startup.
+- **1-Click Stack Launch**:
+  ```bash
+  docker compose up -d
+  ```
+
+### 2. Custom Domain Pointing (Cloudflare Zero Trust)
+- In the Cloudflare Zero Trust Dashboard (`Networks` -> `Tunnels`):
+  1. Add a Public Hostname pointing to your custom domain (e.g. `stream.yourdomain.com`).
+  2. Set Service URL to `http://icecast:8000` (or `http://web_admin:80` for reverse-proxied web access).
+  3. Export the Tunnel Token and save it to `server/.env`:
+     ```env
+     CLOUDFLARE_TUNNEL_TOKEN=eyJhIjoi...
+     ```
+  4. Restart tunnel container: `docker compose restart cloudflared`.
+
+### 3. Client Applications & Live Distribution
+- **Flutter Mobile Client (`mobile_app/`)**:
+  - Build Android APK / App Bundle and iOS IPA connected to the live stream endpoint.
+  - Test background audio playback with lock-screen notification media controls.
+- **Web App Distribution**:
+  - Serve directly via Nginx container on port `3000` (or reverse proxied via Cloudflare at `radio.yourdomain.com`).
+  - Deploy static PWA to Firebase Hosting / Cloudflare Pages if CDN edge hosting is preferred.
 
 ---
 
-## Next Steps (Phase 8: 24/7 Dedicated Server Shift)
-1. Commit branch `feature/06-cloudflare-tunnel`:
-   ```powershell
-   git add .
-   git commit -m "feat(tunnel): integrate Cloudflare Zero Trust tunnel service and dynamic edge endpoints (Phase 7 complete)"
-   git push origin feature/06-cloudflare-tunnel
-   ```
-2. Merge into `main` and deploy web client to Firebase Hosting (`firebase deploy --only hosting`).
-3. Deploy 24/7 Icecast + Cloudflare container stack on the dedicated broadcast machine.
+## Quick Reference: Local Verification Endpoints
+- **Listener Web Player**: `http://localhost:3000`
+- **RJ Broadcaster Control Room**: `http://localhost:3000/admin/` (Passkey: `charuAdmin2026`)
+- **Icecast Direct Stream**: `http://localhost:8000/live`
+- **Icecast JSON Telemetry**: `http://localhost:3000/status-json.xsl`
+- **Icecast Web Admin**: `http://localhost:8000/admin/` (User: `admin`, Pass: in `server/.env`)

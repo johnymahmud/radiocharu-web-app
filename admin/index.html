@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Radio Charu - Broadcaster Control Panel</title>
 
   <meta name="theme-color" content="#0f172a">
   <link rel="icon" type="image/svg+xml" href="../web/icons/logo.svg">
-  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/admin.css?v=2.2.0">
 </head>
 <body>
 
@@ -27,10 +30,12 @@
     </div>
   </div>
 
-  <!-- Top Dark Slate Navbar (Caster.fm Style) -->
+  <!-- Top Dark Slate Navbar -->
   <header class="top-navbar">
     <div class="brand-section">
-      <img src="../web/icons/logo.svg" alt="Radio Charu Logo" class="station-logo" width="38" height="38">
+      <div class="logo-box">
+        <img src="../web/icons/logo.svg" alt="Radio Charu Logo" class="station-logo" width="36" height="36">
+      </div>
       <div class="brand-text">
         <h1>Radio Charu</h1>
         <span>Broadcaster Control Panel</span>
@@ -43,14 +48,14 @@
         
         <!-- Server Status Pill -->
         <div id="serverPill" class="status-pill pill-offline" title="Icecast HTTP service reachability">
-          <span class="label-tag">Server:</span>
+          <span class="label-tag">SERVER:</span>
           <span class="pill-dot"></span>
           <span id="serverPillText">Checking...</span>
         </div>
 
         <!-- Broadcast Status Pill -->
         <div id="broadcastPill" class="status-pill pill-off-air" title="Mixxx / BUTT live broadcast signal state">
-          <span class="label-tag">Broadcast:</span>
+          <span class="label-tag">BROADCAST:</span>
           <span class="pill-dot"></span>
           <span id="broadcastPillText">Checking...</span>
         </div>
@@ -58,46 +63,41 @@
       </div>
 
       <!-- Navigation Actions -->
-      <a href="../web/" class="btn-nav" target="_blank" title="Open public listener web app">
-        📻 Listener Page
-      </a>
-      <button id="lockBtn" class="btn-nav" title="Lock the dashboard">
-        🔒 Lock
-      </button>
+      <div class="nav-links">
+        <a href="../" class="btn-nav" target="_blank" title="Open Public Listener Player">🎧 Listener Page</a>
+        <button id="lockBtn" class="btn-logout" title="Lock Dashboard">🔒 Lock</button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Dashboard Container -->
+  <!-- Main Dashboard Layout -->
   <main class="dashboard-body">
-    
-    <!-- 2-Column Grid: Server & Broadcast Cards -->
+
+    <!-- Top 2-Column Section (Streaming Server & Live Broadcast) -->
     <div class="dashboard-grid">
-      
-      <!-- Card 1: Streaming Server & Parameters (Caster.fm Style) -->
-      <section class="c-card" aria-label="Streaming Server Parameters">
+
+      <!-- Left Card: Streaming Server -->
+      <section class="c-card">
         <div class="c-card-header">
           <div class="c-card-title">
-            <span>⚙️ Streaming Server</span>
+            <span class="icon-gear">⚙️</span>
+            <span>Streaming Server</span>
           </div>
-          <span id="serverCardStatus" class="badge badge-danger">Checking</span>
+          <span id="serverCardStatus" class="badge badge-success">Online</span>
         </div>
 
         <div class="c-card-body">
-          
-          <!-- Parameters Table -->
           <div class="param-table">
             
             <div class="param-row">
               <span class="param-label">Server Type</span>
-              <div class="param-value-wrap">
-                <span class="param-value">Icecast 2</span>
-              </div>
+              <span class="param-value text-blue">Icecast 2</span>
             </div>
 
             <div class="param-row">
               <span class="param-label">Server Address (Host)</span>
               <div class="param-value-wrap">
-                <span id="credHost" class="param-value">localhost</span>
+                <span class="param-value" id="credHost">localhost</span>
                 <button class="btn-copy" data-copy="host">Copy</button>
               </div>
             </div>
@@ -105,7 +105,7 @@
             <div class="param-row">
               <span class="param-label">Port</span>
               <div class="param-value-wrap">
-                <span id="credPort" class="param-value">8000</span>
+                <span class="param-value" id="credPort">8000</span>
                 <button class="btn-copy" data-copy="port">Copy</button>
               </div>
             </div>
@@ -113,7 +113,7 @@
             <div class="param-row">
               <span class="param-label">Mountpoint</span>
               <div class="param-value-wrap">
-                <span id="credMount" class="param-value">/live</span>
+                <span class="param-value" id="credMount">/live</span>
                 <button class="btn-copy" data-copy="mount">Copy</button>
               </div>
             </div>
@@ -121,7 +121,7 @@
             <div class="param-row">
               <span class="param-label">Username</span>
               <div class="param-value-wrap">
-                <span id="credUser" class="param-value">source</span>
+                <span class="param-value" id="credUser">source</span>
                 <button class="btn-copy" data-copy="user">Copy</button>
               </div>
             </div>
@@ -129,7 +129,7 @@
             <div class="param-row">
               <span class="param-label">Source Password</span>
               <div class="param-value-wrap">
-                <span id="credPass" class="param-value">••••••••••••••••</span>
+                <span class="param-value" id="credPass">••••••••••••••••</span>
                 <button id="togglePassBtn" class="btn-sm-action">Show</button>
                 <button class="btn-copy" data-copy="pass">Copy</button>
               </div>
@@ -137,104 +137,103 @@
 
           </div>
 
-          <!-- Copy All Button -->
+          <!-- Full Width Copy Button -->
           <button class="btn-copy-all-block btn-copy" data-copy="all">
-            📋 Copy All Connection Settings
+            <span>📋</span> Copy All Connection Settings
           </button>
 
-          <!-- Server Details Footer -->
-          <div style="font-size: 0.78rem; color: #64748b; display: flex; justify-content: space-between; border-top: 1px solid #e2e8f0; padding-top: 10px;">
-            <span>Engine: <strong id="serverId" style="color: #334155;">Icecast 2.4</strong></span>
-            <span>Location: <strong id="serverLocation" style="color: #334155;">Dhaka, BD</strong></span>
+          <!-- Sub-Footer Metadata -->
+          <div class="server-metadata-bar">
+            <span>Engine: <strong id="serverId">Radio Charu Broadcast Engine/2.4.4</strong></span>
+            <span>Location: <strong id="serverLocation">Dhaka, Bangladesh</strong></span>
           </div>
-
         </div>
       </section>
 
-      <!-- Card 2: Live Broadcast & Telemetry Metrics -->
-      <section class="c-card" aria-label="Live Broadcast Metrics">
+      <!-- Right Card: Live Broadcast -->
+      <section class="c-card">
         <div class="c-card-header">
           <div class="c-card-title">
-            <span>🎙️ Live Broadcast</span>
+            <span class="icon-mic">🎙️</span>
+            <span>Live Broadcast</span>
           </div>
-          <a href="http://localhost:8000/admin/" target="_blank" class="btn-copy" style="text-decoration: none; padding: 4px 10px;">
-            Admin Console ↗
-          </a>
+          <a href="http://localhost:8000/admin/" target="_blank" class="btn-admin-console" title="Open Icecast Web Admin">Admin Console ↗</a>
         </div>
 
         <div class="c-card-body">
-          
-          <!-- Current Track Title Banner -->
+          <!-- Dark Track Banner -->
           <div class="track-banner">
-            <span class="track-banner-label">Current Track Title</span>
-            <div id="currentTrack" class="track-banner-title">
-              No active broadcast (Mixxx / BUTT disconnected)
-            </div>
+            <span class="track-banner-label">CURRENT TRACK TITLE</span>
+            <div id="currentTrack" class="track-banner-title">No broadcast signal received. (Connect Mixxx/BUTT)</div>
           </div>
 
-          <!-- Metrics Row -->
+          <!-- 3-Box Metrics Row -->
           <div class="metrics-row">
+            
             <div class="metric-box">
-              <span class="metric-box-label">Current Listeners</span>
-              <span id="currentListeners" class="metric-box-val" style="color: #16a34a;">0</span>
+              <span class="metric-box-label">CURRENT LISTENERS</span>
+              <span id="currentListeners" class="metric-box-val text-green">0</span>
             </div>
+
             <div class="metric-box">
-              <span class="metric-box-label">Peak Listeners</span>
+              <span class="metric-box-label">PEAK LISTENERS</span>
               <span id="peakListeners" class="metric-box-val">0</span>
             </div>
+
             <div class="metric-box">
-              <span class="metric-box-label">Bitrate</span>
-              <span id="streamBitrate" class="metric-box-val" style="color: #0284c7;">--</span>
+              <span class="metric-box-label">BITRATE</span>
+              <span id="streamBitrate" class="metric-box-val text-blue">192 kbps</span>
             </div>
+
           </div>
 
-          <!-- Additional Stream Info -->
-          <div class="param-table" style="margin-top: auto;">
+          <!-- Bottom Telemetry Table -->
+          <div class="param-table">
             <div class="param-row">
               <span class="param-label">Stream Uptime</span>
-              <span id="streamUptime" class="param-value" style="color: #334155;">--</span>
+              <span class="param-value" id="streamUptime">--:--:--</span>
             </div>
             <div class="param-row">
               <span class="param-label">Audio Stream Info</span>
-              <span id="streamAudioInfo" class="param-value" style="color: #64748b; font-size: 0.8rem;">Waiting for source stream</span>
+              <span class="param-value" id="streamAudioInfo">Waiting for signal</span>
             </div>
           </div>
-
         </div>
       </section>
 
     </div>
 
-    <!-- Section 2: Encoder Setup Guides (Accordions) -->
-    <section class="c-card" aria-label="Broadcaster Setup Guides">
+    <!-- Bottom Full-Width Section: Quick Encoder Setup Guides -->
+    <section class="c-card full-width-card">
       <div class="c-card-header">
         <div class="c-card-title">
-          <span>📖 Quick Encoder Setup Guides</span>
+          <span class="icon-book">📖</span>
+          <span>Quick Encoder Setup Guides</span>
         </div>
       </div>
 
       <div class="c-card-body">
         <div class="accordion-wrapper">
           
-          <!-- BUTT Guide -->
+          <!-- BUTT Guide (Active/Open by default) -->
           <div class="acc-item active">
             <div class="accordion-header">
               <span>🎧 BUTT (Broadcast Using This Tool) Setup</span>
-              <span>▼</span>
+              <span class="acc-arrow">▼</span>
             </div>
             <div class="acc-content">
               <p>1. Open BUTT $\rightarrow$ Click <strong>Settings</strong> $\rightarrow$ <strong>Main</strong> $\rightarrow$ <strong>Server Add</strong>.</p>
-              <p>2. Configure: <strong>Type:</strong> <code>Icecast</code> | <strong>Host:</strong> <code>localhost</code> | <strong>Port:</strong> <code>8000</code></p>
-              <p>3. <strong>Mount:</strong> <code>/live</code> | <strong>User:</strong> <code>source</code> | <strong>Password:</strong> Paste the source password above.</p>
+              <p>2. Configure: <strong>Type:</strong> <code class="code-badge">Icecast</code> | <strong>Host:</strong> <code class="code-badge">localhost</code> | <strong>Port:</strong> <code class="code-badge">8000</code></p>
+              <p>3. <strong>Mount:</strong> <code class="code-badge">/live</code> | <strong>User:</strong> <code class="code-badge">source</code> | <strong>Password:</strong> Paste the source password above.</p>
               <p>4. In the <strong>Audio</strong> tab: Choose MP3 at 192 kbps (or 128 kbps), 44.1 kHz Stereo. Click <strong>Play (▶)</strong> on the main BUTT window to go live.</p>
             </div>
           </div>
 
-          <!-- Mixxx DJ Guide -->
+          <!-- Mixxx Guide -->
           <div class="acc-item">
             <div class="accordion-header">
-              <span>🎚️ Mixxx DJ Live Broadcasting Setup</span>
-              <span>▼</span>
+              <span>🎛️ Mixxx DJ Live Broadcasting Setup</span>
+              <span class="acc-arrow">▼</span>
             </div>
             <div class="acc-content">
               <p>1. Open Mixxx $\rightarrow$ <strong>Options</strong> $\rightarrow$ <strong>Preferences</strong> $\rightarrow$ <strong>Live Broadcasting</strong>.</p>
@@ -244,11 +243,11 @@
             </div>
           </div>
 
-          <!-- Mobile Apps Guide -->
+          <!-- Mobile Encoders Guide -->
           <div class="acc-item">
             <div class="accordion-header">
               <span>📱 Mobile Encoders (BroadcastMySelf / Rocket Broadcaster)</span>
-              <span>▼</span>
+              <span class="acc-arrow">▼</span>
             </div>
             <div class="acc-content">
               <p>For live broadcasting from Android or iOS, enter the server parameters above into <strong>BroadcastMySelf</strong> or <strong>Rocket Broadcaster</strong>.</p>
@@ -264,9 +263,31 @@
   <!-- Toast Notification Container -->
   <div id="toast" class="toast hidden"></div>
 
-  <!-- Scripts -->
-  <script src="js/admin-config.js"></script>
-  <script src="js/admin.js"></script>
+  <!-- Scripts with Cache-Busting -->
+  <script src="js/admin-config.js?v=2.2.0"></script>
+  <script src="js/admin.js?v=2.2.0"></script>
+
+  <!-- Prevent Admin caching in Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        for (const reg of registrations) {
+          if (reg.scope.includes('/admin')) {
+            reg.unregister();
+          }
+        }
+      });
+      if ('caches' in window) {
+        caches.keys().then(keys => {
+          keys.forEach(k => {
+            if (k.includes('v1') || k.includes('radiocharu-v1')) {
+              caches.delete(k);
+            }
+          });
+        });
+      }
+    }
+  </script>
 
 </body>
 </html>

@@ -25,6 +25,19 @@ services:
         aliases:
           - icecast
 
+  web_admin:
+    build:
+      context: ..
+      dockerfile: web/Dockerfile
+    container_name: radiocharu_web_admin
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-3000}:80"
+    depends_on:
+      - icecast
+    networks:
+      - radio_net
+
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: radiocharu_tunnel
@@ -34,10 +47,11 @@ services:
       - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
     depends_on:
       - icecast
+      - web_admin
     networks:
       - radio_net
 
 networks:
   radio_net:
     name: radiocharu_network
-    driver: bridge
+    external: true

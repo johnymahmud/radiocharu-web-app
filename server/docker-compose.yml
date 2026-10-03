@@ -22,6 +22,17 @@ services:
     networks:
       - radiocharu_net
 
+  tunnel_gateway:
+    image: cloudflare/cloudflared:latest
+    container_name: radiocharu_tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      icecast_engine:
+        condition: service_healthy
+    networks:
+      - radiocharu_net
+
 networks:
   radiocharu_net:
     name: radiocharu_network

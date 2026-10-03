@@ -1,11 +1,11 @@
 # Radio Charu: Current State & System Health
 
-- **Current Version**: `v0.4.1-signal-pipeline`
-- **Active Branch**: `feature/03-listener-web-app` (ready for Phase 5 branch)
-- **Current Phase**: **Phase 4: Signal-Driven Listener Web App — VERIFIED & STABLE**
-- **Next Milestone**: **Phase 5: Broadcaster Admin Control Panel (Caster.fm-style RJ tools & Mobile Preparation)**
+- **Current Version**: `v0.5.0-rj-panel`
+- **Active Branch**: `feature/04-rj-admin-panel`
+- **Current Phase**: **Phase 5: Broadcaster Admin Control Panel — IN PROGRESS**
+- **Next Milestone**: **Phase 6: 24/7 Production Server Shift & Mobile Client Integration**
 - **Last Updated**: 2026-10-03
-- **Overall Health**: 🟢 Core Icecast & Signal-Driven Audio Pipeline Live & Fully Operational
+- **Overall Health**: 🟢 Core Broadcast Engine, Listener Web App, and RJ Control Suite Live
 
 ---
 
@@ -19,17 +19,20 @@
 | **Icecast Engine Docker** | 🟢 Running & Healthy | `localhost:8000` | Verified Alpine Icecast 2.4 container, clean global CORS, `/live` & `/status-json.xsl` live |
 | **Cloudflare Tunnel Gateway** | ⏸️ Paused / Deferred | `stream.yourdomain.com` | Container scaffolding complete in `docker-compose.yml`. Awaiting custom domain & token |
 | **Signal-Driven Web App & PWA** | 🟢 Verified & Stable | `web/` & Firebase | Direct HTML5 audio streaming, real-time ON AIR telemetry, clean PWA manifest/icons |
-| **RJ Admin Dashboard** | 🎯 Next Active Task | `admin/` | Scheduled for Phase 5 |
+| **RJ Admin Control Panel** | 🟢 Ground-Truth & Light UI | `admin/` & `web/admin/` | Caster.fm Cloud layout, dual status pills (Server & Broadcast), 1-click copy, strict 2.5s polling |
 
 ---
 
-## Architectural Refinement: Signal-Driven Pipeline
+## Phase 5 Implementation Details (Caster.fm Parity & Strict Telemetry)
 
-* **Design Philosophy**:
-  - The Icecast server and web client operate as a pure, direct audio signal pipeline and live telemetry monitor.
-  - Removed stateful Web Audio API graph hijacking and aggressive auto-play/retry loops from the web client.
-  - The web layer delivers lightweight, unhindered audio streaming and instant `● ON AIR` / `○ OFF AIR` status reflection based on direct broadcast signal ingestion (from Mixxx/BUTT).
-  - Rich UI controls, offline caches, and visualizers are cleanly decoupled and delegated to the upcoming Flutter Mobile Client.
+* **Broadcaster Dashboard Architecture (`admin/` & `web/admin/`)**:
+  - `admin/index.html`: Caster.fm Cloud light dashboard featuring pure white card panels on light slate background, dual top-right navbar status pills:
+    * `Server: [ Online (Green) / Offline (Red) ]`
+    * `Broadcast: [ On Air (Green) / Off Air (Red) ]`
+  - `admin/css/admin.css`: Clean light control room UI (`#f1f5f9` slate base, crisp `#ffffff` cards, `#0f172a` top navbar, JetBrains Mono parameters).
+  - `admin/js/admin-config.js`: Centralized broadcast parameters (Host, Port, Mount `/live`, User, Source password) and admin passkey (`charuAdmin2026`).
+  - `admin/js/admin.js`: Strict ground-truth telemetry engine polling `/status-json.xsl` every 2500ms without artificial state or timeouts. Real-time track title, listeners, peak stats, and live uptime calculation.
+  - Setup guide accordions for BUTT, Mixxx, and Mobile encoders.
 
 ---
 
@@ -44,8 +47,9 @@
 - [x] `docs/CLOUDFLARE_TUNNEL_GUIDE.md` authored with bilingual (English & বাংলা) setup procedures.
 - [x] Phase 3 state preserved and documented as deferred without blocking frontend development.
 - [x] Phase 4 Signal-Driven Listener Web App, PWA shell, PWA PNG icons, and Firebase hosting configuration verified and stable.
+- [x] Phase 5 Broadcaster Admin Control Panel (Caster.fm parity suite) implemented and accessible.
 
 ---
 
 ## Active Blockers & Known Issues
-- None. Ready for Phase 5 Broadcaster Admin Panel development.
+- None. Ready for local RJ panel verification and preparation for mobile client / 24/7 dedicated laptop deployment.

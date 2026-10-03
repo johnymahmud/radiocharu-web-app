@@ -1,0 +1,617 @@
+/* ==============================================================================
+   Radio Charu - Caster.fm Style Broadcaster Dashboard (Light Theme)
+   ============================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Hind+Siliguri:wght@500;600;700&display=swap');
+
+:root {
+  --bg-page: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-alt: #f8fafc;
+  --border-color: #e2e8f0;
+  --border-color-focus: #3b82f6;
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-code: #0369a1;
+
+  --color-brand: #1a472a;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-warning: #d97706;
+
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-bangla: 'Hind Siliguri', sans-serif;
+
+  --radius-lg: 12px;
+  --radius-md: 8px;
+  --radius-sm: 6px;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* -------------------------------------------------------------
+   Top Navigation Bar (Caster.fm Dark Slate Header)
+   ------------------------------------------------------------- */
+.top-navbar {
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.station-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+}
+
+.brand-text h1 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.brand-text span {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* Dual Status Indicators on Top-Right */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.status-pills-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.status-pill .label-tag {
+  color: #94a3b8;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  margin-right: 2px;
+}
+
+.pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Server States */
+.pill-online {
+  background: rgba(22, 163, 74, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+.pill-online .pill-dot {
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+}
+
+.pill-offline {
+  background: rgba(220, 38, 38, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+.pill-offline .pill-dot {
+  background: #f87171;
+}
+
+/* Broadcast States */
+.pill-on-air {
+  background: rgba(22, 163, 74, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+.pill-on-air .pill-dot {
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+  animation: pulseGreen 1.8s infinite;
+}
+
+.pill-off-air {
+  background: rgba(220, 38, 38, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+.pill-off-air .pill-dot {
+  background: #f87171;
+}
+
+@keyframes pulseGreen {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.btn-nav {
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-nav:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* -------------------------------------------------------------
+   Main Content Layout
+   ------------------------------------------------------------- */
+.dashboard-body {
+  max-width: 1120px;
+  width: 100%;
+  margin: 24px auto;
+  padding: 0 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Section Grid (2 Columns: Server Card + Broadcast Card) */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Card Container */
+.c-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.c-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.c-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.badge-success {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.badge-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+/* -------------------------------------------------------------
+   Parameters Table (Caster.fm Style)
+   ------------------------------------------------------------- */
+.param-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.param-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-color);
+  background: #ffffff;
+}
+
+.param-row:nth-child(even) {
+  background: var(--bg-card-alt);
+}
+
+.param-row:last-child {
+  border-bottom: none;
+}
+
+.param-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.param-value-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.param-value {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-code);
+}
+
+/* Buttons */
+.btn-copy {
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-copy:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.btn-sm-action {
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.btn-copy-all-block {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  background: #0f172a;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-copy-all-block:hover {
+  background: #1e293b;
+}
+
+/* -------------------------------------------------------------
+   Broadcast Metrics & Live State Card
+   ------------------------------------------------------------- */
+.track-banner {
+  background: #0f172a;
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-banner-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.track-banner-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #38bdf8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.metric-box {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metric-box-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.metric-box-val {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* -------------------------------------------------------------
+   Accordions (Setup Guides)
+   ------------------------------------------------------------- */
+.accordion-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.acc-item {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.accordion-header {
+  padding: 12px 18px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  background: var(--bg-card-alt);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.accordion-header:hover {
+  background: #e2e8f0;
+}
+
+.acc-content {
+  display: none;
+  padding: 16px 18px;
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.6;
+  border-top: 1px solid var(--border-color);
+  background: #ffffff;
+}
+
+.acc-item.active .acc-content {
+  display: block;
+}
+
+.acc-content code {
+  font-family: var(--font-mono);
+  background: #f1f5f9;
+  color: #0369a1;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+/* -------------------------------------------------------------
+   Passkey Modal Overlay
+   ------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+}
+
+.passkey-box {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-elevated);
+  padding: 32px 28px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.passkey-box h2 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--text-main);
+}
+
+.passkey-box p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.passkey-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.passkey-input:focus {
+  border-color: var(--border-color-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.btn-unlock {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: #0f172a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-unlock:hover {
+  background: #1e293b;
+}
+
+.error-msg {
+  color: var(--color-danger);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* -------------------------------------------------------------
+   Toast
+   ------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-elevated);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.25s ease;
+  z-index: 10000;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hidden { display: none !important; }
+
+/* -------------------------------------------------------------
+   Responsive Breakpoints
+   ------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .top-navbar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .navbar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

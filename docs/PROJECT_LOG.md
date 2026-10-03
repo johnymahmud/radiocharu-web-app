@@ -4,6 +4,22 @@ All architectural decisions, major implementation milestones, and key sessions a
 
 ---
 
+### [2026-10-03] - Phase 5: Broadcaster / RJ Admin Control Panel Suite
+- **Branch**: `feature/04-rj-admin-panel`
+- **Author**: Antigravity Assistant & Full-Stack Architect
+- **Action Items Completed**:
+  1. Built dedicated Broadcaster Control Dashboard in `admin/` (and mirrored to `web/admin/` for unified static hosting):
+     - `admin/index.html`: Executive dashboard with passkey security gate, live status badge, metrics grid (listeners, peaks, bitrate, stream uptime), track title ticker, and server diagnostics.
+     - `admin/css/admin.css`: Control room dark theme with glassmorphic cards, emerald status badges, and responsive layouts.
+     - `admin/js/admin-config.js`: Centralized broadcast parameters (Host, Port, Mount `/live`, User, Source password) and admin passkey (`charuAdmin2026`).
+     - `admin/js/admin.js`: Handles passkey authentication with session persistence, 1-click clipboard copy utility, password reveal/mask, and 3-second telemetry polling.
+  2. Implemented Caster.fm parity setup guides:
+     - Step-by-step connection instructions for BUTT, Mixxx, OBS, and mobile streaming encoders (Rocket Broadcaster, BroadcastMySelf).
+  3. Integrated seamless cross-navigation between public Listener Web App (`/`) and RJ Panel (`/admin/`).
+- **Architectural Rationale**: Providing an intuitive, self-hosted RJ control panel replaces commercial dependencies (such as Caster.fm) while keeping broadcast credentials securely guarded behind a passkey gate.
+
+---
+
 ### [2026-10-03] - Phase 4: Listener Web App & PWA Implementation
 - **Branch**: `feature/03-listener-web-app`
 - **Author**: Antigravity Assistant & Frontend Architect

@@ -1,38 +1,29 @@
 # Radio Charu: Next Actionable Steps
 
-## Phase 4 Status: VERIFIED & STABLE ✅
-- Signal-driven native streaming pipeline is active and verified.
-- Real-time Icecast telemetry sync (`● ON AIR` / `○ OFF AIR`, track title, bitrate, listeners) is fully operational.
-- Single global CORS header configured and confirmed.
-- PWA icons generated and manifest validated without console errors.
+## Phase 5 Status: COMPLETED & VERIFIED ✅
+- RJ Broadcaster Admin Control Panel implemented in `admin/` and `web/admin/`.
+- Passkey protection gate (`charuAdmin2026`) with session memory verified.
+- 1-Click Caster.fm-style credentials copy to clipboard active.
+- Real-time telemetry sync (Listeners, Peak, Bitrate, Uptime counter, Track title) operational.
+- Setup guides for BUTT, Mixxx, and Mobile encoders verified.
 
 ---
 
-## Immediate Next Actions (Transition to Phase 5)
+## Immediate Next Actions (Phase 6: 24/7 Production Deployment & Mobile Integration)
 
-1. **Commit & Branch Transition**:
-   - Commit all Phase 4 refinements on `feature/03-listener-web-app`:
-     ```powershell
-     git add .
-     git commit -m "feat(web): finalize signal-driven audio pipeline and telemetry (Phase 4 complete)"
-     git push origin feature/03-listener-web-app
-     ```
-   - Switch to `main` and branch out to `feature/04-rj-admin-panel`:
-     ```powershell
-     git checkout main
-     git checkout -b feature/04-rj-admin-panel
-     ```
+1. **Local Preview of Admin Control Room**:
+   - Access via browser: `http://localhost:3000/admin/`
+   - Enter passkey: `charuAdmin2026`
+   - Verify connection settings and 1-click copy buttons.
 
-2. **Phase 5: Broadcaster Admin Control Panel (Caster.fm-style RJ Suite)**:
-   - Scaffold `admin/index.html`, `admin/css/admin.css`, and `admin/js/admin.js`.
-   - Build RJ Live Connection Dashboard:
-     * Server Host, Ingestion Port (8000), Mount (`/live`), Bitrate, Source Password display with copy-to-clipboard buttons.
-     * Direct one-click links to launch or configure BUTT and Mixxx.
-   - Build Stream Diagnostics & RJ Telemetry:
-     * Active broadcast uptime counter, peak listener graph, and client connection table.
-     * Kick source utility and server restart/reload trigger.
-   - Build Audience Shoutbox Moderation Panel:
-     * Message approval queue and live request feed.
+2. **Commit Phase 5 Feature**:
+   ```powershell
+   git add .
+   git commit -m "feat(admin): build broadcaster RJ control panel and caster.fm parity suite (Phase 5 complete)"
+   git push origin feature/04-rj-admin-panel
+   ```
 
-3. **Mobile Client Preparation (Flutter App)**:
-   - Structure API schemas in `shared/` for native Flutter client integration (consuming raw `/live` stream and status endpoints).
+3. **Phase 6 Roadmap: 24/7 Production Shift & Mobile Ecosystem**:
+   - Create 24/7 dedicated laptop server bootstrap script (auto-start containers on Windows/Linux boot).
+   - Integrate Shoutbox API / Audience interaction moderation queue.
+   - Scaffold Flutter mobile app client in `mobile/` consuming raw `/live` stream and status endpoints.

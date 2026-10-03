@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>রেডিও চারু - কথা, গান ও মানুষের সংযোগ</title>
+
+  <!-- PWA & SEO Meta Tags -->
+  <meta name="description" content="রেডিও চারু (Radio Charu) - ঢাকা থেকে সম্প্রচারিত ২৪/৭ হাই-ফিডেলিটি অনলাইন কমিউনিটি রেডিও। কথা, গান ও মানুষের সংযোগ।">
+  <meta name="theme-color" content="#1a472a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Radio Charu">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/logo.svg">
+
+  <!-- OpenGraph / Social Metadata -->
+  <meta property="og:title" content="রেডিও চারু - কথা, গান ও মানুষের সংযোগ">
+  <meta property="og:description" content="২৪/৭ লাইভ অনলাইন রেডিও স্ট্রিমিং ও কমিউনিটি সংযোগ।">
+  <meta property="og:type" content="music.radio_station">
+  <meta property="og:image" content="icons/logo.svg">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <main class="app-container">
+    
+    <!-- PWA Install Banner (Shown when installable) -->
+    <aside id="pwaInstallBanner" class="pwa-banner hidden" aria-label="অ্যাপ ইনস্টলেশন">
+      <p>📱 হোম স্ক্রিনে রেডিও চারু অ্যাপ ইনস্টল করুন</p>
+      <button id="pwaInstallBtn" class="btn-install">ইনস্টল</button>
+    </aside>
+
+    <!-- Header Section -->
+    <header class="station-header">
+      <div class="brand-wrapper">
+        <img src="icons/logo.svg" alt="Radio Charu Logo" class="station-logo" width="48" height="48">
+        <div class="brand-titles">
+          <h1>রেডিও চারু</h1>
+          <p>কথা, গান ও মানুষের সংযোগ</p>
+        </div>
+      </div>
+      <div id="statusPill" class="status-pill off-air">
+        <span id="statusDot" class="status-dot dot-offline"></span>
+        <span id="statusText">OFF AIR</span>
+      </div>
+    </header>
+
+    <!-- Stats Dashboard Grid -->
+    <section class="stats-grid" aria-label="লাইভ পরিসংখ্যান">
+      <div class="stat-card">
+        <span class="stat-label">সম্প্রচার অবস্থা</span>
+        <span id="broadcastState" class="metric-value text-muted">অফলাইন</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">শ্রোতা সংখ্যা</span>
+        <span id="listenersCount" class="metric-value">০</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">অডিও কোয়ালিটি</span>
+        <span id="bitrate" class="metric-value">--</span>
+      </div>
+    </section>
+
+    <!-- Main Live Player Card -->
+    <section class="player-card" aria-label="অডিও প্লেয়ার">
+
+      <!-- Now Playing Metadata -->
+      <div class="track-info-wrapper">
+        <div class="track-badge">এখন শুনছেন</div>
+        <div id="trackTitle" class="track-title">রেডিও চারু স্টুডিও নীরব</div>
+      </div>
+
+      <!-- Player Controls -->
+      <div class="player-controls">
+        
+        <!-- Reload Stream Button -->
+        <button id="reloadBtn" class="control-btn" title="স্ট্রিম রিলোড করুন" aria-label="স্ট্রিম রিলোড">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+        </button>
+
+        <!-- Master Play / Pause Button -->
+        <button id="playBtn" class="play-btn-main" aria-label="প্লে করুন">
+          <!-- Play Icon -->
+          <svg id="playIcon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <!-- Pause Icon -->
+          <svg id="pauseIcon" class="hidden" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+            <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+          </svg>
+          <!-- Spinner -->
+          <svg id="spinner" class="spinner hidden" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+          </svg>
+        </button>
+
+        <!-- Volume Slider & Mute Toggle -->
+        <div class="volume-wrapper">
+          <button id="muteBtn" class="control-btn" title="মিউট / আনমিউট" aria-label="মিউট টগল">
+            <svg class="icon-volume" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <svg class="icon-muted hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          </button>
+          <input id="volumeSlider" class="volume-slider" type="range" min="0" max="100" value="80" aria-label="ভলিউম নিয়ন্ত্রণ">
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Community & RJ Control Shortcut -->
+    <section class="community-section" aria-label="কমিউনিটি ও সংযোগ">
+      <div class="community-text">
+        <h3>শ্রোতা আড্ডা ও গান অনুরোধ</h3>
+        <p>আমাদের সাথে যুক্ত হোন এবং আপনার পছন্দের গানের অনুরোধ জানান</p>
+      </div>
+      <div class="community-actions">
+        <a href="#shoutbox" class="btn-secondary">
+          💬 শাউটবক্স
+        </a>
+        <a href="../admin/" class="btn-secondary" title="RJ ব্রডকাস্টার প্যানেল">
+          🎙️ RJ প্যানেল
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 <strong>রেডিও চারু</strong> (Radio Charu) • ঢাকা, বাংলাদেশ</p>
+      <p>চালিত হচ্ছে <a href="http://localhost:8000" target="_blank" rel="noopener">Icecast2 Engine</a> দ্বারা</p>
+    </footer>
+
+  </main>
+
+  <!-- Application Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/telemetry.js"></script>
+  <script src="js/audio-player.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

@@ -37,6 +37,14 @@
         <bind-address>0.0.0.0</bind-address>
     </listen-socket>
 
+    <!-- Global HTTP Response Headers (CORS support for status-json.xsl & Web Audio API) -->
+    <http-headers>
+        <header name="Access-Control-Allow-Origin" value="*" />
+        <header name="Access-Control-Allow-Methods" value="GET, OPTIONS, HEAD" />
+        <header name="Access-Control-Allow-Headers" value="Range, Origin, Accept, X-Requested-With, Content-Type" />
+        <header name="Access-Control-Expose-Headers" value="Content-Length, Content-Range" />
+    </http-headers>
+
     <!-- Mountpoint Configuration: /live -->
     <mount type="normal">
         <mount-name>/live</mount-name>
@@ -50,13 +58,6 @@
         <bitrate>192</bitrate>
         <type>audio/mpeg</type>
         <subtype>mp3</subtype>
-        <http-headers>
-            <header name="Access-Control-Allow-Origin" value="*" />
-            <header name="Access-Control-Allow-Methods" value="GET, OPTIONS, HEAD" />
-            <header name="Access-Control-Allow-Headers" value="Range, Origin, Accept, X-Requested-With, Content-Type" />
-            <header name="Access-Control-Expose-Headers" value="Content-Length, Content-Range" />
-            <header name="Cache-Control" value="no-cache, no-store, must-revalidate" />
-        </http-headers>
     </mount>
 
     <!-- Mountpoint Configuration: /fallback (AutoDJ / Offline backup) -->
@@ -66,10 +67,6 @@
         <burst-size>65535</burst-size>
         <public>0</public>
         <stream-name>Radio Charu Ambient Loop</stream-name>
-        <http-headers>
-            <header name="Access-Control-Allow-Origin" value="*" />
-            <header name="Cache-Control" value="no-cache, no-store, must-revalidate" />
-        </http-headers>
     </mount>
 
     <!-- Filesystem Paths -->

@@ -43,12 +43,12 @@
                  │
                  ▼
  ┌────────────────────────────────────────────────────────┐
- │ Frontend & Listener Ecosystem (Firebase Hosting)       │
+ │ Frontend & Listener Ecosystem (Firebase Hosting & App) │
  │                                                        │
- │   • Listener Web App (PWA, Low-latency HTML5 Player)   │
- │   • Audio Visualizer (Web Audio API canvas spectrum)   │
- │   • Real-time Now Playing, Listeners Count, History    │
- │   • Interactive Chat & Song Request Shoutbox           │
+ │   • Listener Web App (Ultra-lightweight Stream Monitor)│
+ │   • Signal-Driven Audio Pipeline (Direct HTML5 Audio)  │
+ │   • Real-time Telemetry (ON AIR / OFF AIR, Track info) │
+ │   • Flutter Mobile App (Rich UI, Controls & Caching)   │
  │   • Broadcaster Admin Panel (Caster.fm style control)  │
  └────────────────────────────────────────────────────────┘
 ```
@@ -99,10 +99,11 @@
 - Map public hostname `stream.radiocharu.com` to internal container `http://icecast_engine:8000`.
 - Verify HTTPS audio streaming globally on desktop/mobile browsers with zero router port forwarding.
 
-### Phase 4: Listener Web App with Visualizer, Status API & Firebase Deploy
-- Build responsive, ultra-modern Web App & PWA in `web/` using Vanilla CSS / modern web tools with dark aesthetic and glassmorphism.
-- Integrate Web Audio API audio spectrum visualizer (bars, waves, circular pulse).
-- Real-time stream telemetry polling (Song title, RJ status, live listener count).
+### Phase 4: Signal-Driven Listener Web App & Stream Receiver
+- Build an ultra-lightweight, signal-driven Web App & PWA in `web/` using Vanilla CSS/JS.
+- Direct native HTML5 Audio stream pipeline (`/live`) without Web Audio API graph overhead or aggressive retry loops.
+- Real-time Icecast telemetry polling (`/status-json.xsl`) mapping ON AIR / OFF AIR states and track metadata.
+- Delegate complex stateful UI controls, offline caches, and visualizers to the upcoming Flutter Mobile Client.
 - Setup Firebase project hosting configuration (`firebase.json`, `.firebaserc`).
 
 ### Phase 5: Broadcaster Admin Control Panel

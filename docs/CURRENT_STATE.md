@@ -1,10 +1,10 @@
 # Radio Charu: Current State & System Health
 
-- **Current Version**: `v0.1.0-scaffold`
-- **Active Branch**: `main`
-- **Current Phase**: **Phase 1: Repo Setup & Memory Kit Scaffolding**
+- **Current Version**: `v0.2.0-icecast-engine`
+- **Active Branch**: `feature/01-docker-icecast`
+- **Current Phase**: **Phase 2: Dockerized Icecast & Local BUTT/Mixxx Broadcast Validation**
 - **Last Updated**: 2026-10-03
-- **Overall Health**: 🟢 Initializing
+- **Overall Health**: 🟢 Configured & Ready for Local Launch
 
 ---
 
@@ -15,7 +15,7 @@
 | **Directory Scaffolding** | ✅ Completed | Local workspace | `docs/`, `server/icecast/`, `server/tunnel/`, `web/`, `admin/`, `shared/` initialized |
 | **AI Memory Kit** | ✅ Completed | `docs/` | `AGENT_RULES.md`, `MASTER_BLUEPRINT.md`, `CURRENT_STATE.md`, `PROJECT_LOG.md`, `NEXT_STEPS.md` |
 | **Root Git Configuration** | ✅ Completed | `.gitignore` | Configured for Node, Docker logs, OS metadata, and environment secrets |
-| **Icecast Engine Docker** | ⏳ Pending | `localhost:8000` | Scheduled for Phase 2 (`feature/01-docker-icecast`) |
+| **Icecast Engine Docker** | 🟢 Running & Healthy | `localhost:8000` | Verified Alpine Icecast 2.4 container, `/status-json.xsl` live |
 | **Cloudflare Tunnel** | ⏳ Pending | `stream.radiocharu.com` | Scheduled for Phase 3 |
 | **Listener Web App** | ⏳ Pending | Firebase Hosting | Scheduled for Phase 4 |
 | **RJ Admin Dashboard** | ⏳ Pending | Local/Cloud Admin | Scheduled for Phase 5 |
@@ -24,11 +24,14 @@
 
 ## Completed Milestones
 - [x] Repository created and cloned locally.
-- [x] Antigravity IDE workspace initialized.
-- [x] Folder hierarchy established for server, web, admin, shared, and docs.
-- [x] Architectural blueprint and agent guidelines codified.
+- [x] Antigravity IDE workspace initialized with AI Memory Kit.
+- [x] `server/.env.example` & `server/.env` configured with broadcast credentials and limits.
+- [x] `server/icecast/icecast.xml` created with Dhaka location, CORS headers, and `/live` mountpoint.
+- [x] `server/icecast/Dockerfile` & `server/icecast/entrypoint.sh` created with lightweight Alpine base.
+- [x] `server/docker-compose.yml` configured for `radiocharu_icecast` service.
+- [x] `server/README.md` created with BUTT/Mixxx broadcast parameters and validation endpoints.
 
 ---
 
 ## Active Blockers & Known Issues
-- None. Ready to proceed with git commit and Phase 2 development.
+- None. Ready for local Docker engine build and live broadcast validation with BUTT/Mixxx.

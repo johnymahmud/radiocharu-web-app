@@ -1,0 +1,101 @@
+<icecast>
+    <!-- Server Identity & Metadata -->
+    <location>Dhaka, Bangladesh</location>
+    <admin>admin@radiocharu.local</admin>
+    <server-id>Radio Charu Broadcast Engine/2.4.4</server-id>
+    <hostname>localhost</hostname>
+
+    <!-- Global Connection & Buffer Limits -->
+    <limits>
+        <clients>1000</clients>
+        <sources>10</sources>
+        <queue-size>524288</queue-size>
+        <client-timeout>30</client-timeout>
+        <header-timeout>15</header-timeout>
+        <source-timeout>10</source-timeout>
+        <burst-on-connect>1</burst-on-connect>
+        <burst-size>65535</burst-size>
+    </limits>
+
+    <!-- Global Authentication -->
+    <authentication>
+        <source-password>CharuLiveSource2026!</source-password>
+        <relay-password>CharuLiveRelay2026!</relay-password>
+        <admin-user>admin</admin-user>
+        <admin-password>CharuAdminSecure2026!</admin-password>
+    </authentication>
+
+    <!-- Default Directory Listing Settings -->
+    <directory>
+        <yp-url-timeout>15</yp-url-timeout>
+        <yp-url>http://dir.xiph.org/cgi-bin/yp-cgi</yp-url>
+    </directory>
+
+    <!-- Network Binding -->
+    <listen-socket>
+        <port>8000</port>
+        <bind-address>0.0.0.0</bind-address>
+    </listen-socket>
+
+    <!-- Mountpoint Configuration: /live -->
+    <mount type="normal">
+        <mount-name>/live</mount-name>
+        <max-listeners>1000</max-listeners>
+        <burst-size>65535</burst-size>
+        <public>1</public>
+        <stream-name>Radio Charu Live Stream</stream-name>
+        <stream-description>The Voice of Charukola &amp; Beyond - 24/7 Live Stream</stream-description>
+        <stream-url>https://radiocharu.com</stream-url>
+        <genre>Eclectic, World, Indie, Talk, Bangla</genre>
+        <bitrate>192</bitrate>
+        <type>audio/mpeg</type>
+        <subtype>mp3</subtype>
+        <http-headers>
+            <header name="Access-Control-Allow-Origin" value="*" />
+            <header name="Access-Control-Allow-Methods" value="GET, OPTIONS, HEAD" />
+            <header name="Access-Control-Allow-Headers" value="Range, Origin, Accept, X-Requested-With, Content-Type" />
+            <header name="Access-Control-Expose-Headers" value="Content-Length, Content-Range" />
+            <header name="Cache-Control" value="no-cache, no-store, must-revalidate" />
+        </http-headers>
+    </mount>
+
+    <!-- Mountpoint Configuration: /fallback (AutoDJ / Offline backup) -->
+    <mount type="normal">
+        <mount-name>/fallback</mount-name>
+        <max-listeners>500</max-listeners>
+        <burst-size>65535</burst-size>
+        <public>0</public>
+        <stream-name>Radio Charu Ambient Loop</stream-name>
+        <http-headers>
+            <header name="Access-Control-Allow-Origin" value="*" />
+            <header name="Cache-Control" value="no-cache, no-store, must-revalidate" />
+        </http-headers>
+    </mount>
+
+    <!-- Filesystem Paths -->
+    <paths>
+        <basedir>/usr/share/icecast</basedir>
+        <logdir>/var/log/icecast2</logdir>
+        <webroot>/usr/share/icecast/web</webroot>
+        <adminroot>/usr/share/icecast/admin</adminroot>
+        <pidfile>/tmp/icecast.pid</pidfile>
+
+        <!-- Standard Web / JSON Aliases -->
+        <alias source="/" destination="/status.xsl"/>
+        <alias source="/status.json" destination="/status-json.xsl"/>
+    </paths>
+
+    <!-- Logging & Diagnostics -->
+    <logging>
+        <accesslog>access.log</accesslog>
+        <errorlog>error.log</errorlog>
+        <loglevel>3</loglevel> <!-- 4: Debug, 3: Info, 2: Warn, 1: Error -->
+        <logsize>10000</logsize> <!-- 10MB per log file before rotation -->
+        <logarchive>1</logarchive>
+    </logging>
+
+    <!-- Security & Privileges (Privilege dropping managed via su-exec) -->
+    <security>
+        <chroot>0</chroot>
+    </security>
+</icecast>

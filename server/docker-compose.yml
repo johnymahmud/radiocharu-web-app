@@ -1,0 +1,28 @@
+services:
+  icecast_engine:
+    build:
+      context: ./icecast
+      dockerfile: Dockerfile
+    container_name: radiocharu_icecast
+    restart: unless-stopped
+    ports:
+      - "${ICECAST_PORT:-8000}:8000"
+    environment:
+      - ICECAST_PORT=${ICECAST_PORT:-8000}
+      - ICECAST_SOURCE_PASSWORD=${ICECAST_SOURCE_PASSWORD:-CharuLiveSource2026!}
+      - ICECAST_RELAY_PASSWORD=${ICECAST_RELAY_PASSWORD:-CharuLiveRelay2026!}
+      - ICECAST_ADMIN_USER=${ICECAST_ADMIN_USER:-admin}
+      - ICECAST_ADMIN_PASSWORD=${ICECAST_ADMIN_PASSWORD:-CharuAdminSecure2026!}
+      - ICECAST_MAX_CLIENTS=${ICECAST_MAX_CLIENTS:-1000}
+      - ICECAST_MAX_SOURCES=${ICECAST_MAX_SOURCES:-10}
+      - ICECAST_BURST_SIZE=${ICECAST_BURST_SIZE:-65535}
+    volumes:
+      - ./icecast/icecast.xml:/etc/icecast2/icecast.xml
+      - ./icecast/logs:/var/log/icecast2
+    networks:
+      - radiocharu_net
+
+networks:
+  radiocharu_net:
+    name: radiocharu_network
+    driver: bridge

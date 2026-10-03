@@ -1,7 +1,7 @@
 services:
   icecast:
     build:
-      context: ./icecast
+      context: ./server/icecast
       dockerfile: Dockerfile
     container_name: radiocharu_icecast
     hostname: icecast
@@ -18,8 +18,8 @@ services:
       - ICECAST_MAX_SOURCES=${ICECAST_MAX_SOURCES:-10}
       - ICECAST_BURST_SIZE=${ICECAST_BURST_SIZE:-65535}
     volumes:
-      - ./icecast/icecast.xml:/etc/icecast2/icecast.xml
-      - ./icecast/logs:/var/log/icecast2
+      - ./server/icecast/icecast.xml:/etc/icecast2/icecast.xml
+      - ./server/icecast/logs:/var/log/icecast2
     networks:
       radio_net:
         aliases:

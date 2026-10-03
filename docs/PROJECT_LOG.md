@@ -4,6 +4,25 @@ All architectural decisions, major implementation milestones, and key sessions a
 
 ---
 
+### [2026-10-03] - Phase 7: Cloudflare Zero Trust Tunnel Integration & Edge Network Architecture
+- **Branch**: `feature/06-cloudflare-tunnel`
+- **Author**: Antigravity Assistant & Cloudflare DevSecOps Lead
+- **Action Items Completed**:
+  1. Updated Multi-Container Architecture (`server/docker-compose.yml` and root `docker-compose.yml`):
+     - Integrated `cloudflared` tunnel container (`cloudflare/cloudflared:latest`) with dynamic environment token injection (`TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}`).
+     - Connected `icecast` and `cloudflared` services on a unified custom bridge network (`radio_net`), allowing the tunnel container to communicate with `http://icecast:8000` internally without host port bindings.
+  2. Environment & Central Configurations:
+     - `server/.env.example`: Added `CLOUDFLARE_TUNNEL_TOKEN=your_cloudflare_zero_trust_tunnel_token_here` placeholder and public endpoint variables.
+     - `web/js/config.js` & `admin/js/admin-config.js`: Added dynamic hostname and origin detection with automatic fallback to `localhost:8000` when running in local development mode.
+     - `mobile_app/lib/core/constants/api_endpoints.dart`: Configured `useProductionEdge` toggle for seamless switching between Android emulator dev (`10.0.2.2:8000`) and Cloudflare HTTPS edge (`https://stream.yourdomain.com`).
+  3. Ephemeral Quick Tunnel Verification:
+     - Created and updated `tunnel/quick-tunnel.bat` and `tunnel/quick-tunnel.sh` (mirrored in `server/tunnel/`) configured with `http://icecast:8000` for testing live audio streams over `trycloudflare.com` without a custom domain.
+  4. Quality & Compliance:
+     - Verified Flutter app test pass (`3/3 tests passing`) and zero static analysis issues.
+- **Architectural Rationale**: Cloudflare Zero Trust Tunnels eliminate public IP exposure, prevent inbound firewall/port-forwarding risks, and provision free global Anycast SSL certificates automatically for stable live audio delivery.
+
+---
+
 ### [2026-10-03] - Phase 6: Multi-Platform Adaptive & Responsive Layout Architecture
 - **Branch**: `feature/05-flutter-client`
 - **Author**: Antigravity Assistant & Flutter Architect
